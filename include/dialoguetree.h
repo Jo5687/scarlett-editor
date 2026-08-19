@@ -1,6 +1,9 @@
 #pragma once
 
 #include <core/tree/dialoguenode.h>
+#include <core/tree/speakernode.h>
+#include <core/tree/choicenode.h>
+
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -24,6 +27,7 @@ private:
 	 */
 	std::unordered_map<std::uint32_t, std::unique_ptr<DialogueNode>> m_nodeMap;
 	IDGenerator m_IDGenerator;
+	DialogueNode* m_entryPoint;
 
 
 public:
@@ -44,9 +48,10 @@ public:
 	* Returns nullptr if no node exists with nodeID.
 	*/
 	DialogueNode* const getNode(uint32_t nodeID);
+	DialogueNode* const getEntryNode() { return m_entryPoint; }
 
 	// Removes all nodes from tree.
-	void clearTree();
+	void clearTree() { m_nodeMap.clear(); }
 
 	// Returns number of nodes in this tree.
 	int getSize() const;

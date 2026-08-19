@@ -2,21 +2,22 @@
 
 #include <memory>
 #include <iostream>
+#include <string>
 
 class DialogueNode
 {
-private:
+protected:
 	uint32_t m_ID;
 
 public:
-	DialogueNode(uint32_t ID) : m_ID(ID) { std::cout << "[NODE] Adding node " << m_ID << std::endl; };
-	~DialogueNode() { std::cout << "[NODE] Deleting node " << m_ID << std::endl; }
+	DialogueNode(uint32_t ID) : m_ID(ID) {}
+	virtual ~DialogueNode() {}
 
 	enum class NodeType {
 		Speaker,
 		Choice
 	};
 
-	uint32_t getID() const;
-	NodeType getType() const;
+	uint32_t getID() const { return m_ID; }
+	virtual NodeType getType() const = 0;
 };

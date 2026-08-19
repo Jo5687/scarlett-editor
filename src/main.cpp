@@ -10,9 +10,18 @@ void test_node_creation()
 
 	tree.addNode(DialogueNode::NodeType::Speaker);
 	tree.addNode(DialogueNode::NodeType::Choice);
-	tree.removeNode(1);
+
+	auto* node = tree.getNode(1);
+
+	if (auto* choiceNode = dynamic_cast<ChoiceNode*>(node))
+	{
+		choiceNode->addChoice();
+		std::cout << "[TEST] This is a choice node" << std::endl;
+	}
 
 	Serializer::serialize(tree);
+
+	tree.clearTree();
 }
 
 int main(int argc, char* argv[]) 
