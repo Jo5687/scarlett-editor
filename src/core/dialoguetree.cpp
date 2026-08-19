@@ -1,6 +1,21 @@
 #include <dialoguetree.h>
 
-DialogueTree::DialogueNode* const DialogueTree::getNode(uint32_t nodeID)
+uint32_t DialogueTree::addNode(DialogueNode::NodeType type) 
+{
+	uint32_t new_ID = m_IDGenerator.generateID();
+
+	m_nodeMap[new_ID] = std::make_unique<DialogueNode>(new_ID);
+
+	return new_ID;
+}
+
+void DialogueTree::removeNode(uint32_t nodeID)
+{
+	m_IDGenerator.returnID(nodeID);
+	m_nodeMap.erase(nodeID);
+}
+
+DialogueNode* const DialogueTree::getNode(uint32_t nodeID)
 {
 	auto result = m_nodeMap.find(nodeID);
 
@@ -11,16 +26,6 @@ DialogueTree::DialogueNode* const DialogueTree::getNode(uint32_t nodeID)
 	}
 
 	return nullptr;
-}
-
-uint32_t DialogueTree::addNode(DialogueTree::NodeType type) 
-{
-	uint32_t new_ID = m_IDGenerator.generateID();
-
-	m_nodeMap[new_ID] = std::make_unique<DialogueNode>(new_ID);
-
-	std::cout << "Adding new dialogue node " << new_ID << std::endl;
-	return new_ID;
 }
 
 int DialogueTree::getSize() const
